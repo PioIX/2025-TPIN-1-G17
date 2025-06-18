@@ -43,3 +43,11 @@ INSERT INTO Usuarios (nombre, password, puntaje)
 VALUES
 ('Emilia', 'sarmiento01', 90),
 ('Julieta', 'juju89', 120);
+
+UPDATE Usuarios
+SET es_admin = true
+WHERE ID = 2;
+
+UPDATE Usuarios
+SET es_admin = true
+WHERE ID = 1;

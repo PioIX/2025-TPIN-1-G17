@@ -66,6 +66,19 @@ app.listen(port, function(){
 });
 
 
+app.post("/login", async function(req, res) {
+    try {
+        /**
+         * En este pedido, deberiamos verificar si el nombre y la contraseña existen en la tabla usuarios
+         * SQL
+         * Los datos los leo como req.body porque estoy en un post
+         * SELECT * FROM Usuarios WHERE nombre = '${req.body.nombre}' AND contraseña = '${req.body.password}'
+         */
+    } catch (e) {
+        res.send(e.message);
+    }  
+})
+
 function ingresar() {
     let email = ui.getEmail();
     let contraseña = ui.getPassword();

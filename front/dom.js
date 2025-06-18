@@ -9,10 +9,14 @@ class UserInterface {
      * Obtiene el texto ingresado en el input "Correo electrónico", sección "Login".
      * @returns String que contiene el correo electrónico ingresado por el usuario.
      */
-    getEmail() {
-        return document.getElementById("email").value;
+    getContraseña() {
+        return document.getElementById("contraseña").value;
     }
-
+    getNombre() {
+        return document.getElementById("nombre").value;
+    } 
+    
+    
     /**
      * Obtiene el texto ingresado en el input "Usuario", sección "Login".
      * @returns String que contiene el nombre de usuario.

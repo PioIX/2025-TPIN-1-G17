@@ -1,5 +1,4 @@
-async function login() {
-    let datos = obtenerDatos();
+async function login(datos) {
     try {
         response = await fetch("http://localhost:4000", {
             method: "POST",
@@ -17,3 +16,16 @@ async function login() {
    
 }
 
+function obtenerDatos() {
+    //Llamar a las funciones de DOM para leer los inputs
+    let pass = getContraseña()
+    let name = getNombre()
+    
+    //Crear el objeto con esos valores y llamar a la funcion login pasandole el objeto datos
+    let datos = {
+        nombre: name,
+        contraseña: pass
+    }
+
+    login(datos)
+}

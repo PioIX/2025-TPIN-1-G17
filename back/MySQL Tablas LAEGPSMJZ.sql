@@ -1,3 +1,7 @@
+DROP TABLE IF EXISTS Frases;
+DROP TABLE IF EXISTS Usuarios;
+DROP TABLE IF EXISTS Autores;
+
 CREATE TABLE Autores(
     ID int NOT NULL auto_increment,
     nombre varchar(255),
@@ -26,8 +30,6 @@ CREATE TABLE Usuarios(
     PRIMARY KEY (ID)
 );
 
-ALTER TABLE Usuarios
-RENAME COLUMN paswword to password;
 
 INSERT INTO Autores (nombre, apellido, origen)
 VALUES
@@ -36,7 +38,7 @@ VALUES
 
 INSERT INTO Frases (contenido, procedencia, id_autor)
 VALUES
-("Nunca quiero ser un producto de mi entorno. Quiero que mi entorno sea un producto de mí.","Billboard Women in Music Awards", 2),
+("Nunca quiero ser un producto de mi entorno. Quiero que mi entorno sea un producto de mí.","Billboard Women in Music Awards", 1),
 ("Mi amor es tuyo para enseñar. Enséñame a amarte y te mostraré cómo ser amado", "La fierecilla domada", 2);
 
 INSERT INTO Usuarios (nombre, password, puntaje)

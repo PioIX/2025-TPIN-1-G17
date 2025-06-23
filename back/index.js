@@ -121,3 +121,31 @@ function registrar() {
     }
 
 }
+
+
+//a partir de acá es el registro
+app.post('/agregarUsuarios', async function(req,res) {
+    try {
+        console.log(req.body) 
+        if (req.body.es_admin == 1) {
+            vector = await realizarQuery(`SELECT * FROM Usuarios WHERE nombre=${req.body.nombre}`)
+
+            if (vector.length == 0) {
+                realizarQuery(`
+                    INSERT INTO Usuarios (nombre, puntaje, password) VALUES
+                        ('${req.body.nombre}',0, '${req.body.password}');
+                    `)
+                    res.send({res: "ok"})
+            } else {
+                res.send({res:"Ya existe ese dato"})
+                
+            } 
+            
+        }
+        else{
+            res.send({res: "No tiene permisos de administrador"})
+        }
+    } catch (e) {
+        res.send(e.message);
+    }  
+})

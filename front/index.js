@@ -1,7 +1,7 @@
 function obtenerDatos() {
     //Llamar a las funciones de DOM para leer los inputs
-    let password = ui.getContraseña()
-    let name = ui.getNombre()
+    let password = ui.PasswordAdmin()
+    let name = ui.getNombreAdmin()
     
     //Crear el objeto con esos valores y llamar a la funcion login pasandole el objeto datos
     let datos = {

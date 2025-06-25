@@ -38,11 +38,11 @@ class UserInterface {
      * @returns String que contiene la contraseña ingresada por el usuario.
      */
     getPasswordAdmin() {
-        return document.getElementById("passwordAdmin").value;
+        return document.getElementById("password").value;
     }
 
     getNombreAdmin() {
-        return document.getElementById("nombreAdmin").value;
+        return document.getElementById("nombre").value;
     } 
 
     /**

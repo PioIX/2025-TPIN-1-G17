@@ -95,18 +95,9 @@ function ingresar() {
     }
 }
 
-function registro(email, nombre, contraseña) {
-    for (let i = 0; i < users.length; i++) {
-        if (email == users[i].correo) {
-            return -1;
-        }
-    }
-    users.push(new User(nombre, email, contraseña));
-    return userId - 1;
 
-}
 
-function registrar() {
+function registro() {
     let email = ui.getEmail();
     let contraseña = ui.getPassword();
     let user = ui.getUser();
@@ -135,17 +126,38 @@ app.post('/agregarUsuarios', async function(req,res) {
                     INSERT INTO Usuarios (nombre, puntaje, password) VALUES
                         ('${req.body.nombre}',0, '${req.body.password}');
                     `)
-                    res.send({res: "ok"})
+                    res.send({res: "ok", agregado: true})
             } else {
-                res.send({res:"Ya existe ese dato"})
-                
+                res.send({res:"Ya existe ese dato", agregado: false})  
             } 
             
         }
         else{
-            res.send({res: "No tiene permisos de administrador"})
+            res.send({res: "No tiene permisos de administrador", agregado: false})
         }
     } catch (e) {
         res.send(e.message);
     }  
+})
+
+//registro
+
+app.post('/registro', async function(req,res) {
+    try {
+        console.log(req.body) 
+            vector = await realizarQuery(`SELECT * FROM Usuarios WHERE nombre=${req.body.nombre}`)
+
+            if (vector.length == 0) {
+                realizarQuery(`
+                    INSERT INTO Usuarios (nombre, puntaje, password) VALUES
+                        ('${req.body.nombre}',0, '${req.body.password}');
+                    `)
+                    res.send({res: "ok", agregado: true})
+            } else {
+                res.send({res:"Ya existe ese dato", agregado: false})  
+            } 
+            
+        }catch (e) {
+        res.send(e.message);
+    }
 })

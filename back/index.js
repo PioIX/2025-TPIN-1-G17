@@ -21,105 +21,69 @@ app.get('/', function (req, res) {
  * req = request. en este objeto voy a tener todo lo que reciba del cliente
  * res = response. Voy a responderle al cliente
  */
-app.get('/students', async function (req, res) {
-    try {
-        let respuesta;
-        if (req.query.id != undefined) {
-            respuesta = await realizarQuery(`SELECT * FROM Students WHERE id=${req.query.id}`)
-        } else {
-            respuesta = await realizarQuery("SELECT * FROM Students");
-            console.log(respuesta)
-        }
-        res.send(respuesta);
-    } catch (error) {
-        res.send({ mensaje: "Tuviste un error", error: error.message });
-    }
-})
-app.post('/students', async function (req, res) {
-    console.log(req.body) //Los pedidos post reciben los datos del req.body
-    try {
-        await realizarQuery(`
-            INSERT INTO Students (id,FirstName,LastName,mail,id_grade) VALUES
-                (${req.body.id},"${req.body.FirstName}","${req.body.LastName}","${req.body.mail}",${req.body.id_grade});
-            `)
-        //El back te convierte solito a JSON siempre y cuando mande un objeto
-        res.send({ respuesta: "Estudiante agregado" })
-    } catch (error) {
-        res.send({ respuesta: "Tuviste un error: ", error: error.message })
-    }
-})
 
-app.get("/animales", async function (req, res) {
-    try {
-        if (req.query.especie != undefined) {
-            res.send(await realizarQuery(`SELECT * FROM Animales WHERE especie = '${req.query.especie}'`))
-        } else {
-            throw "No pusiste la especie"
-        }
-    } catch (e) {
-        res.send(e.message);
-    }
-})
 //Pongo el servidor a escuchar
 app.listen(port, function () {
     console.log(`Server running in http://localhost:${port}`);
 });
 
-// pedido post del login
-app.post("/login", async function (req, res) {
+//LOGIN
+app.post('/login', async function (req, res) {
+    console.log(req.body);
+
     try {
-        let respuesta = await realizarQuery(`SELECT * FROM Usuarios WHERE nombre = '${req.body.nombre}' AND password = '${req.body.password}'`)
-        if (respuesta.length > 0) {
-            res.send({mensaje: "Logueado con exito",idUser: respuesta.id, logged: true})
+        const resultado = await realizarQuery(`
+            SELECT * FROM Usuarios 
+            WHERE nombre = '${req.body.nombre}' AND password = '${req.body.password}'
+        `);
+
+        if (resultado.length > 0) {
+            const usuario = resultado[0];
+            res.send({
+                ok: true,
+                mensaje: "Login correcto",
+                id: usuario.id
+            });
         } else {
-            res.send({mensaje: "Hay un error",logged:false})
+            res.send({
+                ok: false,
+                mensaje: "Credenciales incorrectas"
+            });
+        }
+
+    } catch (error) {
+        res.send({
+            ok: false,
+            mensaje: "Error en el servidor",
+            error: error.message
+        });
+    }
+});
+
+
+//usuario admin
+app.post('/agregarUsuarios', async function (req, res) {
+    try {
+        console.log(req.body)
+        if (req.body.es_admin == 1) {
+            vector = await realizarQuery(`SELECT * FROM Usuarios WHERE nombre=${req.body.nombre}`)
+
+            if (vector.length == 0) {
+                realizarQuery(`
+                    INSERT INTO Usuarios (nombre, puntaje, password) VALUES
+                        ('${req.body.nombre}',0, '${req.body.password}');
+                    `)
+                res.send({ res: "ok" })
+            } else {
+                res.send({ res: "Ya existe ese dato" })
+
+            }
+
+        }
+        else {
+            res.send({ res: "No tiene permisos de administrador" })
         }
     } catch (e) {
-        res.send({error: e.message,logged: false});
+        res.send(e.message);
     }
 })
-
-
-
-function ingresar() {
-    let email = ui.getEmail();
-    let contraseña = ui.getPassword();
-    let result = login(email, contraseña)
-    if (result == 0) {
-        ui.showModal("Error", "Volve a ingresar tus datos");
-    } else if (result > 0) {
-        idLogeado = result;
-        ui.setUser(email)
-        notas(result);
-        ui.changeScreen();
-    } else {
-        ui.showModal("Error", "No encontramos el usuario en nuestra base");
-    }
-}
-
-function registro(email, nombre, contraseña) {
-    for (let i = 0; i < users.length; i++) {
-        if (email == users[i].correo) {
-            return -1;
-        }
-    }
-    users.push(new User(nombre, email, contraseña));
-    return userId - 1;
-
-}
-
-function registrar() {
-    let email = ui.getEmail();
-    let contraseña = ui.getPassword();
-    let user = ui.getUser();
-    let respuesta = registro(email, user, contraseña);
-
-    if (respuesta != -1) {
-        ui.showModal("Listo", "Ya estàs registrado.")
-        ingresar();
-    } else {
-        ui.showModal("Error", "Volve a ingresar tus datos")
-        alert("error");
-    }
-
-}

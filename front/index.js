@@ -1,6 +1,6 @@
 function obtenerDatos() {
     //Llamar a las funciones de DOM para leer los inputs
-    let password = ui.PasswordAdmin()
+    let password = ui.getPasswordAdmin()
     let name = ui.getNombreAdmin()
     
     //Crear el objeto con esos valores y llamar a la funcion login pasandole el objeto datos
@@ -12,6 +12,11 @@ function obtenerDatos() {
     registro(datos)
 }
 
+function   registro(datos) {
+    
+}
+
+//Esta esa para el admin
 async function cargarDatos() {
     try {
         let datos = obtenerDatos();
@@ -25,7 +30,14 @@ async function cargarDatos() {
         console.log(response)
         let result = await response.json()
         console.log(result)
+
+        if(result.agregado == true){
+            ui.showModal("Usuario agregado correctamente");
+        }
     } catch (error) {
-        console.error("Error", error);
+        console.log("Error", error);
     }    
 }
+
+
+    

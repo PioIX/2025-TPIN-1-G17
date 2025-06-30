@@ -79,39 +79,6 @@ app.post("/login", async function(req, res) {
     }  
 })
 
-function ingresar() {
-    let email = ui.getEmail();
-    let contraseña = ui.getPassword();
-    let result = login(email, contraseña)
-    if (result == 0) {
-        ui.showModal("Error", "Volve a ingresar tus datos");
-    } else if (result > 0) {
-        idLogeado = result;
-        ui.setUser(email)
-        notas(result);
-        ui.changeScreen();
-    } else {
-        ui.showModal("Error", "No encontramos el usuario en nuestra base");
-    }
-}
-
-
-
-function registro() {
-    let email = ui.getEmail();
-    let contraseña = ui.getPassword();
-    let user = ui.getUser();
-    let respuesta = registro(email, user, contraseña);
-
-    if (respuesta != -1) {
-        ui.showModal("Listo", "Ya estàs registrado.")
-        ingresar();
-    } else {
-        ui.showModal("Error", "Volve a ingresar tus datos")
-        alert("error");
-    }
-
-}
 
 
 //a partir de acá es el registro
@@ -145,7 +112,7 @@ app.post('/agregarUsuarios', async function(req,res) {
 app.post('/registro', async function(req,res) {
     try {
         console.log(req.body) 
-            vector = await realizarQuery(`SELECT * FROM Usuarios WHERE nombre=${req.body.nombre}`)
+            vector = await realizarQuery(`SELECT * FROM Usuarios WHERE nombre='${req.body.nombre}'`)
 
             if (vector.length == 0) {
                 realizarQuery(`

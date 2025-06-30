@@ -7,11 +7,11 @@ var app = express(); //Inicializo express
 var port = process.env.PORT || 4000; //Ejecuto el servidor en el puerto 3000
 
 // Convierte una petición recibida (POST-GET...) a objeto JSON
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get('/', function(req, res){
+app.get('/', function (req, res) {
     res.status(200).send({
         message: 'GET Home route working fine!'
     });
@@ -21,100 +21,48 @@ app.get('/', function(req, res){
  * req = request. en este objeto voy a tener todo lo que reciba del cliente
  * res = response. Voy a responderle al cliente
  */
-app.get('/students', async function(req,res){
-    try {
-        let respuesta;
-        if (req.query.id != undefined) {
-            respuesta = await realizarQuery(`SELECT * FROM Students WHERE id=${req.query.id}`)
-        } else {
-            respuesta = await realizarQuery("SELECT * FROM Students");
-            console.log(respuesta)
-        }    
-        res.send(respuesta);
-    } catch (error) {
-        res.send({mensaje:"Tuviste un error", error:error.message});
-    }
-})
-app.post('/students',async function(req,res) {
-        console.log(req.body) //Los pedidos post reciben los datos del req.body
-        try {
-            await realizarQuery(`
-            INSERT INTO Students (id,FirstName,LastName,mail,id_grade) VALUES
-                (${req.body.id},"${req.body.FirstName}","${req.body.LastName}","${req.body.mail}",${req.body.id_grade});
-            `)
-            //El back te convierte solito a JSON siempre y cuando mande un objeto
-            res.send({respuesta: "Estudiante agregado"})
-        } catch (error) {
-            res.send({respuesta: "Tuviste un error: ", error:error.message})
-        }
-})
 
-app.get("/animales", async function(req, res) {
-    try {
-        if (req.query.especie != undefined) {
-            res.send(await realizarQuery(`SELECT * FROM Animales WHERE especie = '${req.query.especie}'`))
-        } else {
-            throw "No pusiste la especie"
-        }
-    } catch (e) {
-        res.send(e.message);
-    }  
-})
 //Pongo el servidor a escuchar
-app.listen(port, function(){
+app.listen(port, function () {
     console.log(`Server running in http://localhost:${port}`);
 });
 
-
-app.post("/login", async function(req, res) {
+//LOGIN
+app.post('/login', async function (req, res) {
+    console.log(req.body);
     try {
-        /**
-         * En este pedido, deberiamos verificar si el nombre y la contraseña existen en la tabla usuarios
-         * SQL
-         * Los datos los leo como req.body porque estoy en un post
-         * SELECT * FROM Usuarios WHERE nombre = '${req.body.nombre}' AND contraseña = '${req.body.password}'
-         */
-    } catch (e) {
-        res.send(e.message);
-    }  
-})
+        const resultado = await realizarQuery(`
+            SELECT * FROM Usuarios 
+            WHERE nombre = '${req.body.nombre}' AND password = '${req.body.password}'
+        `);
 
-function ingresar() {
-    let email = ui.getEmail();
-    let contraseña = ui.getPassword();
-    let result = login(email, contraseña)
-    if (result == 0) {
-        ui.showModal("Error", "Volve a ingresar tus datos");
-    } else if (result > 0) {
-        idLogeado = result;
-        ui.setUser(email)
-        notas(result);
-        ui.changeScreen();
-    } else {
-        ui.showModal("Error", "No encontramos el usuario en nuestra base");
+        if (resultado.length > 0) {
+            const usuario = resultado[0];
+            res.send({
+                ok: true,
+                mensaje: "Login correcto",
+                id: usuario.id
+            });
+        } else {
+            res.send({
+                ok: false,
+                mensaje: "Credenciales incorrectas"
+            });
+        }
+
+    } catch (error) {
+        res.send({
+            ok: false,
+            mensaje: "Error en el servidor",
+            error: error.message
+        });
     }
-}
+});
 
 
+//usuario admin
 
-function registro() {
-    let email = ui.getEmail();
-    let contraseña = ui.getPassword();
-    let user = ui.getUser();
-    let respuesta = registro(email, user, contraseña);
-
-    if (respuesta != -1) {
-        ui.showModal("Listo", "Ya estàs registrado.")
-        ingresar();
-    } else {
-        ui.showModal("Error", "Volve a ingresar tus datos")
-        alert("error");
-    }
-
-}
-
-
-//a partir de acá es el registro
+//a partir de acá es el registro de usuario admin
 app.post('/agregarUsuarios', async function(req,res) {
     try {
         console.log(req.body) 
@@ -141,7 +89,6 @@ app.post('/agregarUsuarios', async function(req,res) {
 })
 
 //registro
-
 app.post('/registro', async function(req,res) {
     try {
         console.log(req.body) 

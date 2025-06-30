@@ -37,14 +37,10 @@ class UserInterface {
      * Obtiene el texto ingresado en el input "Contraseña", sección "Login".
      * @returns String que contiene la contraseña ingresada por el usuario.
      */
-    getPasswordAdmin() {
+    getPassword() {
         return document.getElementById("password").value;
     }
-
-    getNombreAdmin() {
-        return document.getElementById("nombre").value;
-    } 
-
+  
     /**
      * Vacía el contenido de los inputs del login / registro.
      */

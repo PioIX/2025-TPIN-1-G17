@@ -40,7 +40,7 @@ class UserInterface {
     getPassword() {
         return document.getElementById("password").value;
     }
-
+  
     /**
      * Vacía el contenido de los inputs del login / registro.
      */

@@ -1,5 +1,19 @@
 let idLogueado = 0;
 
+function obtenerDatos() {
+    //Llamar a las funciones de DOM para leer los inputs
+    let password = ui.getPassword()
+    let nombre = ui.getNombre()
+
+    //Crear el objeto con esos valores y llamar a la funcion login pasandole el objeto datos
+    let datos = {
+        nombre: nombre,
+        password: password
+    }
+
+    login(datos)
+}
+
 async function login(datos) {
     try {
         const response = await fetch("http://localhost:4000/login", {
@@ -23,19 +37,4 @@ async function login(datos) {
     } catch (error) {
         console.error("Error", error);
     }
-}
-
-
-function obtenerDatos() {
-    //Llamar a las funciones de DOM para leer los inputs
-    let password = ui.getPassword()
-    let nombre = ui.getNombre()
-
-    //Crear el objeto con esos valores y llamar a la funcion login pasandole el objeto datos
-    let datos = {
-        nombre: nombre,
-        password: password
-    }
-
-    login(datos)
 }

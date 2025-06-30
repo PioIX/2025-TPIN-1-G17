@@ -32,7 +32,7 @@ async function login(datos) {
         if (result.ok) {
             localStorage.setItem('idUsuario', result.id);
             //let idUsuario = localSoçtorage.getItme('idUsuario) 
-            location.href = 'quienlodijo.html';
+            location.href = 'index.html';
         }
     } catch (error) {
         console.error("Error", error);

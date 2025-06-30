@@ -59,7 +59,6 @@ app.post('/login', async function (req, res) {
     }
 });
 
-
 //usuario admin
 
 //a partir de acá es el registro de usuario admin
@@ -92,7 +91,7 @@ app.post('/agregarUsuarios', async function(req,res) {
 app.post('/registro', async function(req,res) {
     try {
         console.log(req.body) 
-            vector = await realizarQuery(`SELECT * FROM Usuarios WHERE nombre=${req.body.nombre}`)
+            vector = await realizarQuery(`SELECT * FROM Usuarios WHERE nombre='${req.body.nombre}'`)
 
             if (vector.length == 0) {
                 realizarQuery(`

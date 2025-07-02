@@ -153,7 +153,7 @@ footer h3 {
     color: #fffaf2;
 }
 
-/*login*/
+/*login y administrador*/
 .grid-container {
     background: white;
     padding: 1rem;
@@ -170,7 +170,7 @@ footer h3 {
     justify-content: center;
     flex-direction: column;
     align-self: center;
-    margin-bottom: 11%;
+    margin-bottom: 6.8%;
 }
 
 .contenedor-login {
@@ -237,4 +237,9 @@ input:focus {
     background-color: #fff3e0;
     
     outline: none;
+}
+
+.contenedor h2{
+    color:#9591ae;
+    margin-bottom: 1%;
 }

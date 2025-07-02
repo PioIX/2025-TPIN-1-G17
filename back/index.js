@@ -41,7 +41,8 @@ app.post('/login', async function (req, res) {
             res.send({
                 ok: true,
                 mensaje: "Login correcto",
-                id: usuario.id
+                id: usuario.id,
+                es_admin: usuario.es_admin
             });
         } else {
             res.send({

@@ -14,9 +14,9 @@ class UserInterface {
     }
     getNombre() {
         return document.getElementById("nombre").value;
-    } 
-    
-    
+    }
+
+
     /**
      * Obtiene el texto ingresado en el input "Usuario", sección "Login".
      * @returns String que contiene el nombre de usuario.
@@ -40,7 +40,7 @@ class UserInterface {
     getPassword() {
         return document.getElementById("password").value;
     }
-  
+
     /**
      * Vacía el contenido de los inputs del login / registro.
      */
@@ -210,6 +210,18 @@ class UserInterface {
         modal.show();
     }
 }
+
+    //login o registro
+
+    chequeo(nombre, password);{
+        if (nombre = '${req.body.nombre}', password = '${req.body.password}') {
+            cargarDatos(datos)
+            return alert("Su usuario fue registrado")
+        } else {
+            login(datos)
+            return alert("Su usuario fue logueado")
+        }
+    }
 
 /**
  * Objeto para manejar la UI en este TP, provisto por los docentes Nico Facón y Mati Marchesi.

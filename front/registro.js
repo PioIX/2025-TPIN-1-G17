@@ -27,11 +27,11 @@ async function cargarDatos(datos) {
         let result = await response.json()
         console.log(result)
 
+        if(result.agregado == true){
+            ui.showModal("Usuario agregado correctamente");
+        }
     } catch (error) {
         console.log("Error", error);
     }    
 }
-
-
-
 

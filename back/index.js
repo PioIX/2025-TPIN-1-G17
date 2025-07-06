@@ -66,7 +66,7 @@ app.post('/login', async function (req, res) {
 //arreglado
 app.post('/agregarUsuario', async function (req, res) {
     console.log(req.body)
-    let vector = await realizarQuery(`SELECT * FROM Usuarios WHERE nombre="${req.body.nombre_cafe}"`)
+    let vector = await realizarQuery(`SELECT * FROM Usuarios WHERE nombre="${req.body.nombre}"`)
     if (vector.length == 0) {
         realizarQuery(`
             INSERT INTO Usuarios (nombre,puntaje,password) VALUES
@@ -94,6 +94,7 @@ app.post('/registro', async function (req, res) {
         } else {
             res.send({ res: "Ya existe ese dato", agregado: false })
         }
+        
 
     } catch (e) {
         res.status(500).send({
@@ -103,3 +104,4 @@ app.post('/registro', async function (req, res) {
         });
     }
 })
+

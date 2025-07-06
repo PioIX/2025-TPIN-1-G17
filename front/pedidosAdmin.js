@@ -58,14 +58,16 @@ async function borrarUsuario(datos) {
         let result = await response.json();
         console.log(result);
 
-        if (result.borrado === true) {
-            ui.showModal("Usuario eliminado correctamente");
-        } else {
-            ui.showModal("No se encontró el usuario para borrar");
-        }
+        
 
     } catch (error) {
         console.log("Error", error);
         ui.showModal("Ocurrió un error al intentar borrar el usuario");
     }
 }
+
+/*if (result.borrado === true) {
+            ui.showModal("Usuario eliminado correctamente");
+        } else {
+            ui.showModal("No se encontró el usuario para borrar");
+        }*/

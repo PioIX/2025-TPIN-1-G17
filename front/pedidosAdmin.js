@@ -14,9 +14,30 @@ function obtenerDatosAdmin() {
 
 //cargar nuevos usuarios
 
-async function cargarDatosAdmin(datos) {
+async function cargarDatos(datos) {
     try {
-        response = await fetch("http://localhost:4000/agregarUsuarios   ", {
+        response = await fetch("http://localhost:4000/registro", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(datos),
+        });
+        console.log(response)
+        let result = await response.json()
+        console.log(result)
+
+        if(result.agregado == true){
+            ui.showModal("Usuario agregado correctamente");
+        }
+    } catch (error) {
+        console.log("Error", error);
+    }    
+}
+
+async function agregarUsuario(datos) {
+    try {
+        response = await fetch("http://localhost:4000/agregarUsuario", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

@@ -41,8 +41,7 @@ app.post('/login', async function (req, res) {
             res.send({
                 ok: true,
                 mensaje: "Login correcto",
-                id: usuario.id,
-                es_admin: usuario.es_admin
+                id: usuario.id
             });
         } else {
             res.send({
@@ -63,28 +62,20 @@ app.post('/login', async function (req, res) {
 //usuario admin
 
 //a partir de acá es el registro de usuario admin
-app.post('/agregarUsuarios', async function (req, res) {
-    try {
-        console.log(req.body)
-        if (req.body.es_admin == 1) {
-            vector = await realizarQuery(`SELECT * FROM Usuarios WHERE nombre=${req.body.nombre}`)
 
-            if (vector.length == 0) {
-                realizarQuery(`
-                    INSERT INTO Usuarios (nombre, puntaje, password) VALUES
-                        ('${req.body.nombre}',0, '${req.body.password}');
-                    `)
-                res.send({ res: "ok", agregado: true })
-            } else {
-                res.send({ res: "Ya existe ese dato", agregado: false })
-            }
+//arreglado
+app.post('/agregarUsuario', async function (req, res) {
+    console.log(req.body)
+    let vector = await realizarQuery(`SELECT * FROM Usuarios WHERE nombre="${req.body.nombre_cafe}"`)
+    if (vector.length == 0) {
+        realizarQuery(`
+            INSERT INTO Usuarios (nombre,puntaje,password) VALUES
+                ('${req.body.nombre}', 0,'${req.body.password}');
+            `)
+        res.send({ res: "ok" })
+    } else {
+        res.send({ res: "Ya existe ese dato" })
 
-        }
-        else {
-            res.send({ res: "No tiene permisos de administrador", agregado: false })
-        }
-    } catch (e) {
-        res.send(e.message);
     }
 })
 
@@ -105,21 +96,10 @@ app.post('/registro', async function (req, res) {
         }
 
     } catch (e) {
-        res.send(e.message);
-    }
-})
-
-//delete usuario Admin
-
-app.delete('/eliminarUsuarios', function (req, res) {
-    try {
-        console.log(req.body)
-        realizarQuery(`
-        DELETE FROM Usuarios
-        WHERE nombre = "${req.body.nombre}";
-        `)
-        res.send({ res: "Usuario eliminado correctamente", eliminado: true })
-    } catch (e) {
-        res.send(e.message);
+        res.status(500).send({
+            agregado: false,
+            mensaje: "Error en el servidor",
+            error: e.message
+        });
     }
 })

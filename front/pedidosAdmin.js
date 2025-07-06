@@ -35,3 +35,37 @@ async function agregarUsuario(datos) {
     }    
 }
 
+function eliminarUsuariosAdmin() {
+    let name = document.getElementById("nombreEliminar").value;
+
+    let datos = {
+        nombre: name
+    };
+
+    borrarUsuario(datos);
+}
+
+async function borrarUsuario(datos) {
+    try {
+        let response = await fetch("http://localhost:4000/borrarUsuario", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(datos),
+        });
+
+        let result = await response.json();
+        console.log(result);
+
+        if (result.borrado === true) {
+            ui.showModal("Usuario eliminado correctamente");
+        } else {
+            ui.showModal("No se encontró el usuario para borrar");
+        }
+
+    } catch (error) {
+        console.log("Error", error);
+        ui.showModal("Ocurrió un error al intentar borrar el usuario");
+    }
+}

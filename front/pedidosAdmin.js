@@ -6,15 +6,15 @@ function obtenerDatosAdmin() {
     //Crear el objeto con esos valores y llamar a la funcion login pasandole el objeto datos
     let datos = {
         nombre: name,
-        contraseña: password
+        password: password
     }
-
-    cargarDatos(datos)
+    agregarUsuario(datos)
+    
 }
 
-//cargar nuevos usuarios
-
 async function agregarUsuario(datos) {
+
+    
     try {
         response = await fetch("http://localhost:4000/agregarUsuario", {
             method: "POST",
@@ -35,22 +35,3 @@ async function agregarUsuario(datos) {
     }    
 }
 
-//eliminar usuarios ya creados
-
-async function eliminarUsuariosAdmin() {
-    let datos = {
-        nombre: getSelectedItem()
-    }
-
-    response = await fetch("http://localhost:4000/eliminarUsuarios", {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(datos),
-    });
-
-    document.getElementById("mensaje").innerText = "Usuario eliminado correctamente.";
-
-
-}

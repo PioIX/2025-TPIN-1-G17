@@ -211,17 +211,7 @@ class UserInterface {
     }
 }
 
-    //login o registro
-
-    chequeo(nombre, password);{
-        if (nombre = '${req.body.nombre}', password = '${req.body.password}') {
-            cargarDatos(datos)
-            return alert("Su usuario fue registrado")
-        } else {
-            login(datos)
-            return alert("Su usuario fue logueado")
-        }
-    }
+   
 
 /**
  * Objeto para manejar la UI en este TP, provisto por los docentes Nico Facón y Mati Marchesi.

@@ -80,6 +80,22 @@ app.post('/agregarUsuario', async function (req, res) {
     }
 })
 
+//agregar frase
+app.post('/agregarFrase', async function (req, res) {
+    console.log(req.body)
+    let vector = await realizarQuery(`SELECT * FROM Frases WHERE contenido="${req.body.contenido}"`)
+    if (vector.length == 0) {
+        realizarQuery(`
+            INSERT INTO Frases (contenido, procedencia, id_autor) VALUES
+                ('${req.body.contenido}', '${req.body.procedencia}', ${req.body.id_autor});
+            `)
+        res.send({ res: "ok" })
+    } else {
+        res.send({ res: "Ya existe esa frase" })
+
+    }
+})
+
 //registro
 app.post('/registro', async function (req, res) {
     try {

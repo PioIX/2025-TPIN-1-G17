@@ -59,12 +59,34 @@
                 <button onclick="eliminarUsuariosAdmin()" class="button2">Eliminar</button>
             </div>
         </div>
-
-
-
     </div>
 
-    <p id="respuesta"></p>
+    <div class="contenedor">
+        <h2>Agregar nueva frase</h2>
+
+        <div class="contenedor-login">
+            <div class="grid-container">
+                <input id="contenido" placeholder="Ingresa la frase">
+            </div>
+
+            <div class="grid-container">
+                <input id="procedencia" placeholder="Ingrese la procedencia">
+
+            </div>
+
+            <div class="grid-container">
+                <input id="id_autor" placeholder="Ingrese el id autor">
+
+            </div>
+
+            
+
+            <div class="grid-container">
+                <button onclick="obtenerDatosFrase()" class="button2">Agregar</button>
+            </div>
+        </div>
+
+    </div>
 
 
     <script src="dom.js"></script>

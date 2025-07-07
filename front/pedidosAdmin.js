@@ -66,8 +66,41 @@ async function borrarUsuario(datos) {
     }
 }
 
-/*if (result.borrado === true) {
-            ui.showModal("Usuario eliminado correctamente");
-        } else {
-            ui.showModal("No se encontró el usuario para borrar");
-        }*/
+function obtenerDatosFrase() {
+    
+    let contenido = document.getElementById("contenido").value;
+    let procedencia = document.getElementById("procedencia").value;
+    let id_autor = document.getElementById("id_autor").value;
+    
+    
+    let datos = {
+        contenido: contenido,
+        procedencia: procedencia,
+        id_autor: id_autor
+    }
+    agregarFrase(datos)
+    
+}
+
+async function agregarFrase(datos) {
+
+    
+    try {
+        response = await fetch("http://localhost:4000/agregarFrase", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(datos),
+        });
+        console.log(response)
+        let result = await response.json()
+        console.log(result)
+
+        if(result.agregado == true){
+            ui.showModal("Frase agregada correctamente");
+        }
+    } catch (error) {
+        console.log("Error", error);
+    }    
+}

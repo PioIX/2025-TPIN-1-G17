@@ -144,3 +144,29 @@ app.post('/borrarUsuario', async function (req, res) {
         });
     }
 });
+
+
+app.get('/frase', async (req, res) => {
+    try {
+        const frases = await realizarQuery("SELECT * FROM Frases ORDER BY RAND() LIMIT 1;");
+        if (frases.length > 0) {
+            res.send({ ok: true, frase: frases[0] });
+        } else {
+            res.send({ ok: false, mensaje: "No hay frases" });
+        }
+    } catch (error) {
+        res.status.send({ ok: false, mensaje: "Error en el servidor", error: error.message });
+    }
+});
+
+
+app.post('/actualizarPuntaje', async (req, res) => {
+    try {
+        await realizarQuery(`
+            UPDATE Usuarios SET puntaje = ${req.body.puntaje} WHERE ID = ${req.body.id};
+        `);
+        res.send({ ok: true });
+    } catch (e) {
+        res.status.send({ ok: false, error: e.message });
+    }
+});

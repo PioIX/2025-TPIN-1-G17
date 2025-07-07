@@ -6,6 +6,14 @@ const { realizarQuery } = require('./modulos/mysql');
 var app = express(); //Inicializo express
 var port = process.env.PORT || 4000; //Ejecuto el servidor en el puerto 3000
 
+const express = require('express');
+const path = require('path');
+const app = express();
+
+// Asegurate de exponer la carpeta front para acceder a las imágenes
+app.use(express.static(path.join(__dirname, './front'))); // o './front' si estás adentro del mismo nivel
+
+
 // Convierte una petición recibida (POST-GET...) a objeto JSON
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

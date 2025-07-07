@@ -2,21 +2,26 @@ DROP TABLE IF EXISTS Frases;
 DROP TABLE IF EXISTS Usuarios;
 DROP TABLE IF EXISTS Autores;
 
-CREATE TABLE Autores(
-    ID int NOT NULL auto_increment,
-    nombre varchar(255),
-    apellido varchar(255),
-    origen varchar(255),
+
+CREATE TABLE Autores (
+    ID INT NOT NULL AUTO_INCREMENT,
+    nombre VARCHAR(255),
+    apellido VARCHAR(255),
+    origen VARCHAR(255),
+    imagen VARCHAR(255),
     PRIMARY KEY (ID)
 );
 
-CREATE TABLE Frases(
-    ID int NOT NULL auto_increment,
-    contenido varchar(255),
-    procedencia varchar(255),
-    id_autor int,
+
+CREATE TABLE Frases (
+    ID INT NOT NULL AUTO_INCREMENT,
+    contenido VARCHAR(255),
+    procedencia VARCHAR(255),
+    id_autor INT, 
+    id_autor_incorrecto INT,
     PRIMARY KEY (ID),
-    FOREIGN KEY (id_autor) REFERENCES Autores(ID)
+    FOREIGN KEY (id_autor) REFERENCES Autores(ID),
+    FOREIGN KEY (id_autor_incorrecto) REFERENCES Autores(ID)
 );
 
 
@@ -31,9 +36,9 @@ CREATE TABLE Usuarios(
 );
 
 
-INSERT INTO Autores (nombre, apellido, origen)
+INSERT INTO Autores (nombre, apellido, origen, imagen)
 VALUES
-('Taylor', 'Swift', 'Cantante'),
+('Taylor', 'Swift', 'Cantante')
 ('William', 'Shakespeare', 'Dramaturgo y poeta');
 
 INSERT INTO Frases (contenido, procedencia, id_autor)
@@ -53,3 +58,6 @@ WHERE ID = 2;
 UPDATE Usuarios
 SET es_admin = true
 WHERE ID = 1;
+
+UPDATE Autores SET imagen = 'img/sheakspare.png' WHERE id = 2;
+UPDATE Autores SET imagen =  WHERE id = 1;

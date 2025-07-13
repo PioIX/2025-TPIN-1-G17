@@ -59,5 +59,5 @@ UPDATE Usuarios
 SET es_admin = true
 WHERE ID = 1;
 
-UPDATE Autores SET imagen = 'img/sheakspare.png' WHERE id = 2;
+UPDATE Autores SET imagen = 'images/sheakspare.png' WHERE id = 2;
 UPDATE Autores SET imagen =  WHERE id = 1;

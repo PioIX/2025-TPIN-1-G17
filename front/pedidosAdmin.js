@@ -71,12 +71,13 @@ function obtenerDatosFrase() {
     let contenido = document.getElementById("contenido").value;
     let procedencia = document.getElementById("procedencia").value;
     let id_autor = document.getElementById("id_autor").value;
-    
+    let id_autor_incorrecto = document.getElementById("id_autor_incorrecto").value;
     
     let datos = {
         contenido: contenido,
         procedencia: procedencia,
-        id_autor: id_autor
+        id_autor: id_autor,
+        id_autor_incorrecto: id_autor_incorrecto
     }
     agregarFrase(datos)
     

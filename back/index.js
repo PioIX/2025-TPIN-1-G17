@@ -6,9 +6,9 @@ const { realizarQuery } = require('./modulos/mysql');
 var app = express(); //Inicializo express
 var port = process.env.PORT || 4000; //Ejecuto el servidor en el puerto 3000
 
-const express = require('express');
+//const express = require('express');
 const path = require('path');
-const app = express();
+//const app = express();
 
 // Asegurate de exponer la carpeta front para acceder a las imágenes
 app.use(express.static(path.join(__dirname, './front'))); // o './front' si estás adentro del mismo nivel
@@ -94,8 +94,8 @@ app.post('/agregarFrase', async function (req, res) {
     let vector = await realizarQuery(`SELECT * FROM Frases WHERE contenido="${req.body.contenido}"`)
     if (vector.length == 0) {
         realizarQuery(`
-            INSERT INTO Frases (contenido, procedencia, id_autor) VALUES
-                ('${req.body.contenido}', '${req.body.procedencia}', ${req.body.id_autor});
+            INSERT INTO Frases (contenido, procedencia, id_autor, id_autor_incorrecto) VALUES
+                ('${req.body.contenido}', '${req.body.procedencia}', ${req.body.id_autor}, ${req.body.id_autor_incorrecto});
             `)
         res.send({ res: "ok" })
     } else {
@@ -154,7 +154,9 @@ app.post('/borrarUsuario', async function (req, res) {
 });
 
 
-app.get('/frase', async (req, res) => {
+
+//JUEGO
+/* app.get('/frase', async (req, res) => {
     try {
         const frases = await realizarQuery("SELECT * FROM Frases ORDER BY RAND() LIMIT 1;");
         if (frases.length > 0) {
@@ -165,16 +167,50 @@ app.get('/frase', async (req, res) => {
     } catch (error) {
         res.status.send({ ok: false, mensaje: "Error en el servidor", error: error.message });
     }
+}); */
+app.get('/frase', async (req, res) => {
+    try {
+        const frases = await realizarQuery("SELECT * FROM Frases ORDER BY RAND() LIMIT 1;");
+        if (frases.length === 0) {
+            return res.send({ ok: false, mensaje: "No hay frases" });
+        }
+        const frase = frases[0];
+        const autorCorrecto = await realizarQuery(`SELECT * FROM Autores WHERE ID = ${frase.id_autor}`);
+        const autorIncorrecto = await realizarQuery(`SELECT * FROM Autores WHERE ID = ${frase.id_autor_incorrecto}`);
+
+        res.send({
+            ok: true,
+            frase: {
+                id: frase.ID,
+                contenido: frase.contenido,
+                procedencia: frase.procedencia,
+                autorCorrecto: autorCorrecto[0],
+                autorIncorrecto: autorIncorrecto[0]
+            }
+        });
+
+    } catch (error) {
+        res.status(500).send({
+            ok: false,
+            mensaje: "Error en el servidor",
+            error: error.message
+        });
+    }
 });
 
 
-app.post('/actualizarPuntaje', async (req, res) => {
+app.post('/sumarPunto', async function(req, res) {
+    const { idUsuario } = req.body;
+
     try {
         await realizarQuery(`
-            UPDATE Usuarios SET puntaje = ${req.body.puntaje} WHERE ID = ${req.body.id};
+            UPDATE Usuarios
+            SET puntaje = puntaje + 1
+            WHERE ID = ${idUsuario}
         `);
-        res.send({ ok: true });
-    } catch (e) {
-        res.status.send({ ok: false, error: e.message });
+
+        res.send({ ok: true, mensaje: "Punto sumado" });
+    } catch (error) {
+        res.send({ ok: false, mensaje: "Error al sumar punto", error: error.message });
     }
 });

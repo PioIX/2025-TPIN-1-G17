@@ -243,3 +243,39 @@ input:focus {
     color:#9591ae;
     margin-bottom: 1%;
 }
+
+/*JUEGOOOOOOOOOOO OAAAAA*/
+.opciones-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px; 
+    padding-bottom: 11%;
+}
+
+.opcion {
+    background-color: #fffaf2;
+    border: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.opcion img {
+    width: 200px; 
+    height: auto;
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.opcion p {
+    margin: 0;
+    padding: 0;
+}
+
+.estado-Juego {
+    margin-top: 2%;
+}

@@ -38,6 +38,8 @@ async function login(datos) {
                 location.href = 'index.html';
             }
             
+        } else {
+            alert(result.mensaje)
         }
     } catch (error) {
         console.error("Error", error);

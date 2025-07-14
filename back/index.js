@@ -49,7 +49,7 @@ app.post('/login', async function (req, res) {
             res.send({
                 ok: true,
                 mensaje: "Login correcto",
-                id: usuario.id,
+                id: usuario.ID,
                 es_admin: usuario.es_admin
             });
         } else {
@@ -201,11 +201,11 @@ app.get('/frase', async (req, res) => {
 
 app.post('/sumarPunto', async function(req, res) {
     const { idUsuario } = req.body;
-
+    console.log(idUsuario)
     try {
         await realizarQuery(`
             UPDATE Usuarios
-            SET puntaje = puntaje + 1
+            SET puntaje = puntaje + 10
             WHERE ID = ${idUsuario}
         `);
 

@@ -113,7 +113,7 @@ function seleccionarAutor(idSeleccionado) {
     const feedback = document.getElementById('feedback');
 
     if (idSeleccionado === autorCorrectoID) {
-        puntaje++;
+        puntaje+= 10;
         feedback.textContent = "¡Correcto! +1 punto";
         feedback.style.color = "green";
         document.getElementById('puntos').textContent = puntaje;

@@ -49,7 +49,7 @@ app.post('/login', async function (req, res) {
             res.send({
                 ok: true,
                 mensaje: "Login correcto",
-                id: usuario.id,
+                id: usuario.ID,
                 es_admin: usuario.es_admin
             });
         } else {
@@ -205,12 +205,38 @@ app.post('/sumarPunto', async function(req, res) {
     try {
         await realizarQuery(`
             UPDATE Usuarios
-            SET puntaje = puntaje + 1
+            SET puntaje = puntaje + 10
             WHERE ID = ${idUsuario}
         `);
 
         res.send({ ok: true, mensaje: "Punto sumado" });
     } catch (error) {
         res.send({ ok: false, mensaje: "Error al sumar punto", error: error.message });
+    }
+});
+
+
+//PUNTUACIONES
+/*
+app.get('/puntaje', async (req, res) => {
+    try {
+        const puntaje = await realizarQuery("SELECT puntaje, nombre FROM Usuarios ");
+        if (puntaje.length > 0) {
+            res.send({ ok: true, puntaje: puntaje });
+        } else {
+            res.send({ ok: false, mensaje: "No hay puntajes" });
+        }
+    } catch (error) {
+        res.send({ ok: false, mensaje: "Error en el servidor", error: error.message });
+    }
+});
+*/
+   
+app.get("/puntaje", async function (req, res) {
+    try {
+        const vector = await realizarQuery("SELECT ID, nombre, puntaje FROM Usuarios ORDER BY puntaje DESC");
+        res.send({ ok: true, puntos: vector });
+    } catch (error) {
+        res.send({ ok: false, error: error.message });
     }
 });

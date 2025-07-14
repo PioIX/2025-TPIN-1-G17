@@ -30,7 +30,7 @@ async function login(datos) {
         console.log(result);
 
         if (result.ok) {
-            localStorage.setItem('idUsuario', result.id);
+            localStorage.setItem('idUsuario', result.id, result.es_admin);
             //let idUsuario = localSoçtorage.getItme('idUsuario) 
             if (result.es_admin == 1) {
                 location.href = 'index2.html';

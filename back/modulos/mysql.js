@@ -1,6 +1,7 @@
 ﻿//Sección MySQL del código
 const mySql = require("mysql2/promise");
 
+
 /**
  * Objeto con la configuración de la base de datos MySQL a utilizar.
  */
@@ -13,6 +14,7 @@ const SQL_CONFIGURATION_DATA =
 	port: 3306,
 	charset: 'UTF8_GENERAL_CI'
 }
+
 
 /**
  * Realiza una query a la base de datos MySQL indicada en el archivo "mysql.js".

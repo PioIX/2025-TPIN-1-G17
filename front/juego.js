@@ -73,7 +73,10 @@ cargarFrase();
 
 
 let puntaje = 0;
+let cantidadRespuestas = 0;
 let autorCorrectoID = null;
+let frasesYaSalieron = [];
+
 async function cargarFrase() {
     try {
         const response = await fetch('http://localhost:4000/frase');
@@ -84,9 +87,34 @@ async function cargarFrase() {
             return;
         }
 
-        const frase = data.frase;
+        let frase = data.frase;
+        let traerDeVuelta = true
         autorCorrectoID = frase.autorCorrecto.ID;
+        if (frasesYaSalieron.length == 0) {
+            frasesYaSalieron.push(frase)
+        }
+        else{
+            while(traerDeVuelta){
+                traerDeVuelta = false
+                for (let i = 0; i < frasesYaSalieron.length; i++) {
+                    if(frasesYaSalieron[i] == frase){
+                        traerDeVuelta = true
+                    }
+                }
+                if (traerDeVuelta) {
+                     const response = await fetch('http://localhost:4000/frase');
+                    const data = await response.json();
 
+                    if (!data.ok) {
+                        document.getElementById('fraseTexto').textContent = "No hay frases.";
+                        return;
+                    }
+
+                    frase = data.frase
+                    autorCorrectoID = frase.autorCorrecto.ID;
+                }
+            }    
+        }
         // Mostrar frase
         document.getElementById('fraseTexto').textContent = `"${frase.contenido}"`;
 
@@ -111,10 +139,10 @@ async function cargarFrase() {
 
 function seleccionarAutor(idSeleccionado) {
     const feedback = document.getElementById('feedback');
-
+    cantidadRespuestas ++;
     if (idSeleccionado === autorCorrectoID) {
-        puntaje+= 10;
-        feedback.textContent = "¡Correcto! +1 punto";
+        puntaje += 10;
+        feedback.textContent = "¡Correcto! +10 puntos";
         feedback.style.color = "green";
         document.getElementById('puntos').textContent = puntaje;
 
@@ -143,10 +171,14 @@ function seleccionarAutor(idSeleccionado) {
     }
 
     // Cargar nueva frase después de 2 segundos
-    setTimeout(() => {
-        feedback.textContent = "";
-        cargarFrase();
-    }, 2000);
+    if (cantidadRespuestas < 15) {
+        setTimeout(() => {
+            feedback.textContent = "";
+            cargarFrase();
+        }, 1500);
+    } else {
+        //Terminar el jjuego
+    }
 }
 
 

@@ -201,7 +201,7 @@ app.get('/frase', async (req, res) => {
 
 app.post('/sumarPunto', async function(req, res) {
     const { idUsuario } = req.body;
-
+    console.log(idUsuario)
     try {
         await realizarQuery(`
             UPDATE Usuarios

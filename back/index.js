@@ -6,9 +6,7 @@ const { realizarQuery } = require('./modulos/mysql');
 var app = express(); //Inicializo express
 var port = process.env.PORT || 4000; //Ejecuto el servidor en el puerto 3000
 
-const express = require('express');
 const path = require('path');
-const app = express();
 
 // Asegurate de exponer la carpeta front para acceder a las imágenes
 app.use(express.static(path.join(__dirname, './front'))); // o './front' si estás adentro del mismo nivel
@@ -176,5 +174,20 @@ app.post('/actualizarPuntaje', async (req, res) => {
         res.send({ ok: true });
     } catch (e) {
         res.status.send({ ok: false, error: e.message });
+    }
+});
+
+//pedidos
+
+app.get('/puntaje', async (req, res) => {
+    try {
+        const puntaje = await realizarQuery("SELECT puntaje, nombre FROM Usuarios ");
+        if (puntaje.length > 0) {
+            res.send({ ok: true, puntaje: puntaje });
+        } else {
+            res.send({ ok: false, mensaje: "No hay puntajes" });
+        }
+    } catch (error) {
+        res.send({ ok: false, mensaje: "Error en el servidor", error: error.message });
     }
 });

@@ -79,48 +79,43 @@ let frasesYaSalieron = [];
 
 async function cargarFrase() {
     try {
-        const response = await fetch('http://localhost:4000/frase');
-        const data = await response.json();
+        let frase = null;
+        let intentos = 0;
+        let encontradaNueva = false;
 
-        if (!data.ok) {
-            document.getElementById('fraseTexto').textContent = "No hay frases.";
+        // Intentar hasta 10 veces encontrar una frase que no haya salido
+        while (!encontradaNueva && intentos < 15) {
+            const response = await fetch('http://localhost:4000/frase');
+            const data = await response.json();
+
+            if (!data.ok) {
+                document.getElementById('fraseTexto').textContent = "No hay frases.";
+                return;
+            }
+
+            frase = data.frase;
+            intentos++;
+
+            //Verificar si el ID ya salió antes
+            if (!frasesYaSalieron.includes(frase.ID)) {
+                encontradaNueva = true;
+                frasesYaSalieron.push(frase.ID); // Guardar ID de frase
+            }
+        }
+
+        if (!encontradaNueva) {
+            document.getElementById('fraseTexto').textContent = "¡Ya viste todas las frases!";
             return;
         }
 
-        let frase = data.frase;
-        let traerDeVuelta = true
         autorCorrectoID = frase.autorCorrecto.ID;
-        if (frasesYaSalieron.length == 0) {
-            frasesYaSalieron.push(frase)
-        }
-        else{
-            while(traerDeVuelta){
-                traerDeVuelta = false
-                for (let i = 0; i < frasesYaSalieron.length; i++) {
-                    if(frasesYaSalieron[i] == frase){
-                        traerDeVuelta = true
-                    }
-                }
-                if (traerDeVuelta) {
-                     const response = await fetch('http://localhost:4000/frase');
-                    const data = await response.json();
 
-                    if (!data.ok) {
-                        document.getElementById('fraseTexto').textContent = "No hay frases.";
-                        return;
-                    }
-
-                    frase = data.frase
-                    autorCorrectoID = frase.autorCorrecto.ID;
-                }
-            }    
-        }
         // Mostrar frase
         document.getElementById('fraseTexto').textContent = `"${frase.contenido}"`;
 
         // Armar opciones aleatoriamente
         const opciones = [frase.autorCorrecto, frase.autorIncorrecto];
-        if (Math.random() > 0.5) opciones.reverse(); // Para que a veces esté a la izquierda, a veces a la derecha
+        if (Math.random() > 0.5) opciones.reverse(); // Cambiar el orden al azar
 
         // Llenar botón 1
         document.getElementById('nombre1').textContent = `${opciones[0].nombre} ${opciones[0].apellido}`;
@@ -137,16 +132,18 @@ async function cargarFrase() {
     }
 }
 
+
 function seleccionarAutor(idSeleccionado) {
     const feedback = document.getElementById('feedback');
-    cantidadRespuestas ++;
+    cantidadRespuestas++;
+
     if (idSeleccionado === autorCorrectoID) {
         puntaje += 10;
         feedback.textContent = "¡Correcto! +10 puntos";
         feedback.style.color = "green";
         document.getElementById('puntos').textContent = puntaje;
 
-        // 👇 SUMAR PUNTO EN LA BASE
+        //SUMAR PUNTO EN LA BASE
         const idUsuario = localStorage.getItem("idUsuario");
         if (idUsuario) {
             fetch("http://localhost:4000/sumarPunto", {
@@ -154,7 +151,7 @@ function seleccionarAutor(idSeleccionado) {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ idUsuario: idUsuario })
+                body: JSON.stringify({ idUsuario: idUsuario, puntos: 10 }) 
             })
             .then(res => res.json())
             .then(data => {
@@ -170,16 +167,19 @@ function seleccionarAutor(idSeleccionado) {
         feedback.style.color = "red";
     }
 
-    // Cargar nueva frase después de 2 segundos
-    if (cantidadRespuestas < 15) {
-        setTimeout(() => {
-            feedback.textContent = "";
+    // Esperar 1 seg antes de mostrar la siguiente frase o terminar el juego
+    setTimeout(() => {
+        feedback.textContent = "";
+
+        if (cantidadRespuestas < 15) {
             cargarFrase();
-        }, 1500);
-    } else {
-        //Terminar el jjuego
-    }
+        } else {
+            //reirecciona al html final
+            window.location.href = "fin.html";
+        }
+    }, 1000);
 }
+
 
 
 // Iniciar juego al cargar la página

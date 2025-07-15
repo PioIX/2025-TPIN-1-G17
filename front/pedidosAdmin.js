@@ -14,7 +14,7 @@ function obtenerDatosAdmin() {
 
 async function agregarUsuario(datos) {
 
-    
+
     try {
         response = await fetch("http://localhost:4000/agregarUsuario", {
             method: "POST",
@@ -104,4 +104,35 @@ async function agregarFrase(datos) {
     } catch (error) {
         console.log("Error", error);
     }    
+}
+
+//modificar frases
+
+async function modificarFrase() {
+    let datos = {
+        id: document.getElementById("fraseId").value,
+        contenido: document.getElementById("nuevoContenido").value,
+        procedencia: document.getElementById("nuevaProcedencia").value,
+        id_autor: document.getElementById("nuevoAutor").value,
+        id_autor_incorrecto: document.getElementById("nuevoIncorrecto").value
+    };
+
+    try {
+        let response = await fetch("http://localhost:4000/modificarFrase", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(datos)
+        });
+
+        let result = await response.json();
+        if (result.ok) {
+            alert("Frase modificada correctamente");
+        } else {
+            alert("Error: " + result.mensaje);
+        }
+    } catch (error) {
+        console.error("Error al modificar frase:", error);
+    }
 }

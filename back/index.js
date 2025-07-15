@@ -240,3 +240,18 @@ app.get("/puntaje", async function (req, res) {
         res.send({ ok: false, error: error.message });
     }
 });
+
+//modificar frases
+
+app.put('/modificarFrase', async function(req, res) {
+    try {
+        await realizarQuery(`UPDATE Frases SET
+            contenido = '${req.body.contenido}', procedencia = '${req.body.procedencia}', id_autor = ${req.body.id_autor}, id_autor_incorrecto = ${req.body.id_autor_incorrecto} WHERE ID = ${req.body.id};`);
+
+        res.send({ ok: true, mensaje: "Frase modificada correctamente" });
+    } catch (e) {
+        console.log("ERROR:", e.message);
+        res.send({ ok: false, mensaje: "Error en la modificación", error: e.message });
+    }
+});
+

@@ -83,7 +83,7 @@
                 <input id="id_autor_incorrecto" placeholder="Ingrese el id autor incorrecto">
 
             </div>
-            
+
 
             <div class="grid-container">
                 <button onclick="obtenerDatosFrase()" class="button2">Agregar</button>
@@ -92,6 +92,29 @@
 
     </div>
 
+    <div class="contenedor">
+        <h2>Modificar Frase</h2>
+
+        <div class="grid-container">
+            <input type="number" id="fraseId" placeholder="ID de la frase">
+        </div>
+        <div class="grid-container">
+            <input type="text" id="nuevoContenido" placeholder="Nuevo contenido">
+        </div>
+        <div class="grid-container">
+            <input type="text" id="nuevaProcedencia" placeholder="Nueva procedencia">
+        </div>
+        <div class="grid-container">
+            <input type="number" id="nuevoAutor" placeholder="ID del autor correcto">
+        </div>
+        <div class="grid-container">
+            <input type="number" id="nuevoIncorrecto" placeholder="ID del autor incorrecto">
+        </div>
+        <button onclick="modificarFrase()" class="button2">Guardar cambios</button>
+
+    </div>
+
+    </div>
 
     <script src="dom.js"></script>
     <script src="pedidosAdmin.js"></script>

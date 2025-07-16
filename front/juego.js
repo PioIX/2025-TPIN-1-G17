@@ -93,10 +93,10 @@ async function cargarFrase() {
                 document.getElementById('fraseTexto').textContent = "No hay frases.";
                 return;
             }
-
-            const posibleFrase = data.frase;
-            if (!frasesYaSalieron.includes(posibleFrase.ID)) {
-                frase = posibleFrase;
+            if (!frasesYaSalieron.includes(data.frase.id)) {
+                console.log(data.frase)
+                frase = data.frase;
+                frasesYaSalieron.push(data.frase.id)
                 break;
             }
 

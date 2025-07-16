@@ -99,7 +99,7 @@ async function agregarFrase(datos) {
         console.log(result)
 
         if(result.agregado == true){
-            alert("Frase agregada correctamente");
+            ui.showModal("Frase agregada correctamente");
         }
     } catch (error) {
         console.log("Error", error);

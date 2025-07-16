@@ -121,6 +121,10 @@ nav a {
     scale: 1;
 }
 
+.button a{
+    text-decoration: none;
+}
+
 body {
     text-align: center;
     font-family: "League Spartan", sans-serif;

@@ -45,3 +45,7 @@ async function login(datos) {
         console.error("Error", error);
     }
 }
+
+function cambiarPantalla() {
+    location.href = 'quienlodijo.html';
+}

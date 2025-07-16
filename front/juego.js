@@ -69,9 +69,6 @@ async function actualizarPuntaje() {
 
 cargarFrase();
 */
-
-
-
 let puntaje = 0;
 let cantidadRespuestas = 0;
 let autorCorrectoID = null;
@@ -79,12 +76,16 @@ let frasesYaSalieron = [];
 
 async function cargarFrase() {
     try {
-        let frase = null;
-        let intentos = 0;
-        let encontradaNueva = false;
+        if (cantidadRespuestas >= 15) {
+            window.location.href = 'fin.html';
+            return;
+        }
 
-        // Intentar hasta 10 veces encontrar una frase que no haya salido
-        while (!encontradaNueva && intentos < 15) {
+        let intentos = 0;
+        const maxIntentos = 50;
+        let frase = null;
+
+        while (intentos < maxIntentos) {
             const response = await fetch('http://localhost:4000/frase');
             const data = await response.json();
 
@@ -93,44 +94,52 @@ async function cargarFrase() {
                 return;
             }
 
-            frase = data.frase;
-            intentos++;
-
-            //Verificar si el ID ya salió antes
-            if (!frasesYaSalieron.includes(frase.ID)) {
-                encontradaNueva = true;
-                frasesYaSalieron.push(frase.ID); // Guardar ID de frase
+            const posibleFrase = data.frase;
+            if (!frasesYaSalieron.includes(posibleFrase.ID)) {
+                frase = posibleFrase;
+                break;
             }
+
+            intentos++;
         }
 
-        if (!encontradaNueva) {
-            document.getElementById('fraseTexto').textContent = "¡Ya viste todas las frases!";
+        if (!frase) {
+            document.getElementById('fraseTexto').textContent = "Se acabaron las frases.";
             return;
         }
 
         autorCorrectoID = frase.autorCorrecto.ID;
 
-        // Mostrar frase
+        // Mostrar la frase
         document.getElementById('fraseTexto').textContent = `"${frase.contenido}"`;
 
-        // Armar opciones aleatoriamente
+        // Mezclar autores
         const opciones = [frase.autorCorrecto, frase.autorIncorrecto];
-        if (Math.random() > 0.5) opciones.reverse(); // Cambiar el orden al azar
+        if (Math.random() > 0.5) opciones.reverse();
 
-        // Llenar botón 1
+        // Mostrar opción 1
         document.getElementById('nombre1').textContent = `${opciones[0].nombre} ${opciones[0].apellido}`;
         document.getElementById('img1').src = opciones[0].imagen;
-        document.getElementById('opcion1').onclick = () => seleccionarAutor(opciones[0].ID);
+        document.getElementById('opcion1').onclick = () => seleccionarAutor(opciones[0].ID, frase.ID);
 
-        // Llenar botón 2
+        // Mostrar opción 2
         document.getElementById('nombre2').textContent = `${opciones[1].nombre} ${opciones[1].apellido}`;
         document.getElementById('img2').src = opciones[1].imagen;
-        document.getElementById('opcion2').onclick = () => seleccionarAutor(opciones[1].ID);
+        document.getElementById('opcion2').onclick = () => seleccionarAutor(opciones[1].ID, frase.ID);
+
+        // Mostrar progreso
+        document.getElementById('numFrase').textContent = cantidadRespuestas + 1;
+        document.getElementById('totalFrases').textContent = 15;
 
     } catch (error) {
         console.error("Error al cargar la frase:", error);
+        document.getElementById('fraseTexto').textContent = "Error al cargar frase.";
     }
 }
+
+
+
+
 
 
 function seleccionarAutor(idSeleccionado) {

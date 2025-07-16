@@ -153,6 +153,40 @@ app.post('/borrarUsuario', async function (req, res) {
     }
 });
 
+//Agregar autor
+app.post('/agregarAutor', async function (req, res) {
+    try {
+        const { nombre, apellido, origen, imagen } = req.body;
+
+        if (!nombre || !apellido || !origen || !imagen) {
+            return res.send({ ok: false, mensaje: "Faltan datos" });
+        }
+
+        await realizarQuery(`
+            INSERT INTO Autores (nombre, apellido, origen, imagen)
+            VALUES ('${nombre}', '${apellido}', '${origen}', '${imagen}');
+        `);
+
+        res.send({ ok: true, mensaje: "Autor agregado correctamente" });
+    } catch (error) {
+        console.error("Error al agregar autor:", error);
+        res.send({ ok: false, mensaje: "Error en el servidor", error: error.message });
+    }
+});
+
+//modificar frases
+
+app.put('/modificarFrase', async function(req, res) {
+    try {
+        await realizarQuery(`UPDATE Frases SET
+            contenido = '${req.body.contenido}', procedencia = '${req.body.procedencia}', id_autor = ${req.body.id_autor}, id_autor_incorrecto = ${req.body.id_autor_incorrecto} WHERE ID = ${req.body.id};`);
+
+        res.send({ ok: true, mensaje: "Frase modificada correctamente" });
+    } catch (e) {
+        console.log("ERROR:", e.message);
+        res.send({ ok: false, mensaje: "Error en la modificación", error: e.message });
+    }
+});
 
 
 //JUEGO
@@ -240,18 +274,3 @@ app.get("/puntaje", async function (req, res) {
         res.send({ ok: false, error: error.message });
     }
 });
-
-//modificar frases
-
-app.put('/modificarFrase', async function(req, res) {
-    try {
-        await realizarQuery(`UPDATE Frases SET
-            contenido = '${req.body.contenido}', procedencia = '${req.body.procedencia}', id_autor = ${req.body.id_autor}, id_autor_incorrecto = ${req.body.id_autor_incorrecto} WHERE ID = ${req.body.id};`);
-
-        res.send({ ok: true, mensaje: "Frase modificada correctamente" });
-    } catch (e) {
-        console.log("ERROR:", e.message);
-        res.send({ ok: false, mensaje: "Error en la modificación", error: e.message });
-    }
-});
-

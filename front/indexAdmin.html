@@ -93,6 +93,7 @@
     </div>
 
     <div class="contenedor">
+
         <h2>Modificar Frase</h2>
 
         <div class="grid-container">
@@ -110,9 +111,40 @@
         <div class="grid-container">
             <input type="number" id="nuevoIncorrecto" placeholder="ID del autor incorrecto">
         </div>
-        <button onclick="modificarFrase()" class="button2">Guardar cambios</button>
+        <div class="grid-container">
+            <button onclick="modificarFrase()" class="button2">Guardar cambios</button>
+        </div>
 
     </div>
+
+    <div class="contenedor">
+        <h2>Agregar nuevo autor</h2>
+
+        <div class="contenedor-login">
+            <div class="grid-container">
+                <input id="nombreAutor" placeholder="Ingresa el nombre">
+            </div>
+
+            <div class="grid-container">
+                <input id="apellidoAutor" placeholder="Ingrese el apellido">
+
+            </div>
+
+            <div class="grid-container">
+                <input id="origen" placeholder="Ingrese el origen">
+
+            </div>
+
+            <div class="grid-container">
+                <input id="imagenAutor" placeholder="Ingrese la imagen" value="images/autor.png">
+
+            </div>
+
+
+            <div class="grid-container">
+                <button onclick="obtenerDatosAutor()" class="button2">Agregar</button>
+            </div>
+        </div>
 
     </div>
 

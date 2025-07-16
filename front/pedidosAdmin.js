@@ -99,7 +99,7 @@ async function agregarFrase(datos) {
         console.log(result)
 
         if(result.agregado == true){
-            ui.showModal("Frase agregada correctamente");
+            alert("Frase agregada correctamente");
         }
     } catch (error) {
         console.log("Error", error);
@@ -136,3 +136,46 @@ async function modificarFrase() {
         console.error("Error al modificar frase:", error);
     }
 }
+
+//agregar autor
+
+function obtenerDatosAutor() {
+    let nombre = document.getElementById("nombreAutor").value;
+    let apellido = document.getElementById("apellidoAutor").value;
+    let origen = document.getElementById("origen").value;
+    let imagen = document.getElementById("imagenAutor").value;
+
+    let datos = {
+        nombre: nombre,
+        apellido: apellido,
+        origen: origen,
+        imagen: imagen
+    };
+
+    agregarAutor(datos);
+}
+
+async function agregarAutor(datos) {
+    try {
+        const response = await fetch("http://localhost:4000/agregarAutor", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(datos)
+        });
+
+        const result = await response.json();
+        console.log(result);
+
+        if (result.ok) {
+            alert("Autor agregado correctamente");
+        } else {
+            alert("Error al agregar autor: " + result.mensaje);
+        }
+
+    } catch (error) {
+        console.error("Error al hacer el fetch:", error);
+    }
+}
+

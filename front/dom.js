@@ -45,26 +45,26 @@ class UserInterface {
      * Vacía el contenido de los inputs del login / registro.
      */
     clearLoginInputs() {
-        document.getElementById("email").value = "";
+        document.getElementById("nombre").value = "";
         document.getElementById("password").value = "";
-        document.getElementById("username").value = "";
     }
 
     /**
      * Si se está mostrando la pantalla de login la oculta y muestra la de notas. Y viceversa.
      */
-    changeScreen() {
-        const notepad = document.getElementById("notepad");
-        const loginForm = document.getElementById("loginForm");
-        if (notepad.style.display !== "none") {
-            notepad.style.display = "none";
-            loginForm.style.display = "";
-            this.clearAllNotes();
-            this.clearSelect();
+
+    clearLoginInputs() {
+
+        let formLogin = document.getElementById("formLogin");
+        if (formLogin) {
+            formLogin.reset();
         }
-        else {
-            notepad.style.display = "";
-            loginForm.style.display = "none";
+    }
+
+    clearRegisterInputs() {
+        let formRegister = document.getElementById("formRegister");
+        if (formRegister) {
+            formRegister.reset();
         }
     }
 
@@ -211,9 +211,11 @@ class UserInterface {
     }
 }
 
+
    
 
 /**
  * Objeto para manejar la UI en este TP, provisto por los docentes Nico Facón y Mati Marchesi.
  */
 const ui = new UserInterface();
+console.log("Probando UI:", ui);

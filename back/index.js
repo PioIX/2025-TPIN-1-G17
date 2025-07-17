@@ -32,7 +32,8 @@ app.get('/', function (req, res) {
 
 //Pongo el servidor a escuchar
 app.listen(port, function () {
-    console.log(`Server running in http://localhost:${port}`);
+    console.log(`Server running in http://localhost:${port}
+        `);
 });
 
 //LOGIN

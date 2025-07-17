@@ -15,40 +15,39 @@
         <br>
         <div class="menu1">
             <nav>
+                <a href="iniciarSesion.html" class="boton">Iniciar Sesión</a>
                 <a href="index.html" class="boton">Inicio</a>
                 <a href="quienlodijo.html" class="boton">¿Quién lo dijo?</a>
-                <a href="seccion3.html" class="boton">Puntuaciones</a>
+                <a href="fin.html" class="boton">Puntuaciones</a>
             </nav>
         </div>
         <br>
     </header>
-    
-    <div class="estado-Juego">
-        <p>frase</p>
-        <p id="numFrase"></p>
-        <p>de</p>
-        <p id="totalFrases"></p>
-        <p>puntos:</p>
-        <p id="puntos"></p>
-    </div>
+    <main>
+        <br>
 
-    <div class="frase-container">
-        <p id="fraseTexto">"Aquí irá la frase..."</p>
-    </div>
-    <br>
-    <div class="opciones-container">
-        <button id="opcion1" class="opcion">
-            <img id="img1" src="" alt="Imagen 1">
-            <p id="nombre1">Nombre 1</p>
-        </button>
-        <button id="opcion2" class="opcion">
-            <img id="img2" src="" alt="Imagen 2">
-            <p id="nombre2">Nombre 2</p>
-        </button>
-    </div>
+        <div class="estado-Juego">
+            <p>Frase <span id="numFrase"></span> de <span id="totalFrases"></span> — Puntos: <span id="puntos"></span>
+            </p>
+        </div>
 
-
-    <p id="feedback"></p>
+        <p id="feedback"></p>
+        <br>
+        <div class="frase-container">
+            <p id="fraseTexto">"Aquí irá la frase..."</p>
+        </div>
+        <br>
+        <div class="opciones-container">
+            <button id="opcion1" class="opcion">
+                <img id="img1" src="" alt="Imagen 1">
+                <p id="nombre1">Nombre 1</p>
+            </button>
+            <button id="opcion2" class="opcion">
+                <img id="img2" src="" alt="Imagen 2">
+                <p id="nombre2">Nombre 2</p>
+            </button>
+        </div>
+    </main>
 
     <script src="juego.js"></script>
 </body>

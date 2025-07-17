@@ -1,20 +1,18 @@
 function obtenerDatosAdmin() {
-    //Llamar a las funciones de DOM para leer los inputs
     let password = ui.getPassword()
     let name = ui.getNombre()
+    let es_admin = ui.getAdmin()
     
-    //Crear el objeto con esos valores y llamar a la funcion login pasandole el objeto datos
     let datos = {
         nombre: name,
-        password: password
+        password: password,
+        es_admin: es_admin
     }
     agregarUsuario(datos)
     
 }
 
 async function agregarUsuario(datos) {
-
-
     try {
         response = await fetch("http://localhost:4000/agregarUsuario", {
             method: "POST",

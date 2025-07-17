@@ -62,7 +62,7 @@ nav a {
     white-space: nowrap;
     will-change: box-shadow, transform;
     font-size: 18px;
-
+    font-family: "League Spartan", sans-serif;
 }
 
 .boton:hover {
@@ -132,10 +132,10 @@ nav a {
 body {
     text-align: center;
     font-family: "League Spartan", sans-serif;
-    background: linear-gradient(160deg, #fffaf2 0%, #f6f3ff 100%);
+    background: linear-gradient(300deg, #fffaf2 0%, #e1dfeb 100%);
 }
 
-body.final-juego {
+body.fondo {
     background: #fffaf2;
 }
 
@@ -412,7 +412,7 @@ input:focus {
 
 /* Podio especial */
 #tabla tr:nth-child(2) td {
-    background-color: #fffaf2;
+    background-color: gold;
     font-weight: bold;
 }
 

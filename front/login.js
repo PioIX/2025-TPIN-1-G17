@@ -1,11 +1,9 @@
 let idLogueado = 0;
 
 function obtenerDatos() {
-    //Llamar a las funciones de DOM para leer los inputs
     let password = ui.getPassword()
     let nombre = ui.getNombre()
 
-    //Crear el objeto con esos valores y llamar a la funcion login pasandole el objeto datos
     let datos = {
         nombre: nombre,
         password: password
@@ -31,7 +29,6 @@ async function login(datos) {
 
         if (result.ok) {
             localStorage.setItem('idUsuario', result.id, result.es_admin);
-            //let idUsuario = localSoçtorage.getItme('idUsuario) 
             if (result.es_admin == 1) {
                 location.href = 'index2.html';
             } else {
@@ -46,6 +43,44 @@ async function login(datos) {
     }
 }
 
+function obtenerDatosRegistro() {
+    let password = ui.getContraseñaRegistro()
+    let name = ui.getNombreRegistro()
+    
+    let datos = {
+        nombre: name,
+        password: password
+    }
+    agregarUsuarioRegistro(datos)
+    
+}
+
+async function agregarUsuarioRegistro(datos) {
+    try {
+        response = await fetch("http://localhost:4000/agregarUsuario", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(datos),
+        });
+        console.log(response)
+        let result = await response.json()
+        console.log(result)
+
+        if (result.res == "ok") {
+            location.href = 'index.html';
+        }
+        
+    } catch (error) {
+        console.log("Error", error);
+    }    
+}
+
 function cambiarPantalla() {
     location.href = 'quienlodijo.html';
+}
+
+function cambiarPantalla1() {
+    location.href = 'index.html';
 }

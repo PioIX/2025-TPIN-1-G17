@@ -19,10 +19,10 @@
     </div>
     <br>
 </header>
-<body>
+<body class="fondo">
     <div class="contenedor">
 
-        <h2>Iniciar Sesion o Registrate</h2>
+        <h2>Iniciar Sesion</h2>
         
         <div class="contenedor-login" id="formLogin">
             <div class="grid-container">
@@ -37,6 +37,24 @@
         </div>
     
     </div>
+
+    <div class="contenedor">
+
+        <h2>Registrate</h2>
+        
+        <div class="contenedor-login" id="formLogin">
+            <div class="grid-container">
+                <input id="nombreRegistro" placeholder="Ingrese su nombre">
+            </div>
+            <div class="grid-container">
+                <input id="passwordRegistro" type="password" placeholder="Ingrese su contraseña">
+            </div>
+            <div class="grid-container">
+                <button onclick="obtenerDatosRegistro()" class="button2">Registrate</button>
+            </div>
+        </div>
+    
+    </div>
 </body>
 <footer>
     <h3>Arrufat, Gaetani, Suarez y Zuran</h3>
@@ -45,3 +63,4 @@
 <script src="login.js"></script>
 
 </html>
+

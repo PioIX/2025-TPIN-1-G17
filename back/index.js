@@ -69,43 +69,6 @@ app.post('/login', async function (req, res) {
     }
 });
 
-//usuario admin
-
-//a partir de acá es el registro de usuario admin
-
-//arreglado
-app.post('/agregarUsuario', async function (req, res) {
-    console.log(req.body)
-    let vector = await realizarQuery(`SELECT * FROM Usuarios WHERE nombre="${req.body.nombre}"`)
-    if (vector.length == 0) {
-        realizarQuery(`
-            INSERT INTO Usuarios (nombre,puntaje,password) VALUES
-                ('${req.body.nombre}', 0,'${req.body.password}');
-            `)
-        res.send({ res: "ok" })
-        
-    } else {
-        res.send({ res: "Ya existe ese dato" })
-
-    }
-})
-
-//agregar frase
-app.post('/agregarFrase', async function (req, res) {
-    console.log(req.body)
-    let vector = await realizarQuery(`SELECT * FROM Frases WHERE contenido="${req.body.contenido}"`)
-    if (vector.length == 0) {
-        realizarQuery(`
-            INSERT INTO Frases (contenido, procedencia, id_autor, id_autor_incorrecto) VALUES
-                ('${req.body.contenido}', '${req.body.procedencia}', ${req.body.id_autor}, ${req.body.id_autor_incorrecto});
-            `)
-        res.send({ res: "ok" })
-    } else {
-        res.send({ res: "Ya existe esa frase" })
-
-    }
-})
-
 //registro
 app.post('/registro', async function (req, res) {
     try {
@@ -132,7 +95,40 @@ app.post('/registro', async function (req, res) {
     }
 })
 
-// BORRAR USUARIO
+//usuario admin
+app.post('/agregarUsuario', async function (req, res) {
+    console.log(req.body)
+    let vector = await realizarQuery(`SELECT * FROM Usuarios WHERE nombre="${req.body.nombre}"`)
+    if (vector.length == 0) {
+        realizarQuery(`
+            INSERT INTO Usuarios (nombre,es_admin,puntaje,password) VALUES
+                ('${req.body.nombre}', ${req.body.es_admin},0,'${req.body.password}');
+            `)
+        res.send({ res: "ok" })
+        
+    } else {
+        res.send({ res: "Ya existe ese dato" })
+
+    }
+})
+
+//agregar frase
+app.post('/agregarFrase', async function (req, res) {
+    console.log(req.body)
+    let vector = await realizarQuery(`SELECT * FROM Frases WHERE contenido="${req.body.contenido}"`)
+    if (vector.length == 0) {
+        realizarQuery(`
+            INSERT INTO Frases (contenido, procedencia, id_autor, id_autor_incorrecto) VALUES
+                ('${req.body.contenido}', '${req.body.procedencia}', ${req.body.id_autor}, ${req.body.id_autor_incorrecto});
+            `)
+        res.send({ res: "ok" })
+    } else {
+        res.send({ res: "Ya existe esa frase" })
+
+    }
+})
+
+//BORRAR USUARIO
 app.post('/borrarUsuario', async function (req, res) {
     try {
         const nombre = req.body.nombre;
@@ -177,7 +173,6 @@ app.post('/agregarAutor', async function (req, res) {
 });
 
 //modificar frases
-
 app.put('/modificarFrase', async function(req, res) {
     try {
         await realizarQuery(`UPDATE Frases SET
@@ -192,7 +187,6 @@ app.put('/modificarFrase', async function(req, res) {
 
 
 //JUEGO
-
 app.get('/frase', async (req, res) => {
     try {
         const frases = await realizarQuery("SELECT * FROM Frases ORDER BY RAND() LIMIT 1;");

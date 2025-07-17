@@ -41,38 +41,3 @@ async function llenarTabla() {
 }
 
 llenarTabla();
-
-
-/*
-async function mostrarRanking() {
-    try {
-        const response = await fetch("http://localhost:4000/puntaje");
-        const data = await response.json();
-
-        if (data.ok) {
-            let tablaBody = document.getElementById("tablaRanking").querySelector("tbody");
-            tablaBody.innerHTML = ""; // Limpiar contenido previo
-
-            for (let i = 0; i < data.puntaje.length; i++) {
-                let filaHTML = "<tr>" +
-                    "<td>" + data.puntaje[i].nombre + "</td>" +
-                    "<td>" + data.puntaje[i].puntaje + "</td>" +
-                    "</tr>";
-
-                tablaBody.innerHTML += filaHTML;
-            }
-        } else {
-            console.log("No hay puntajes para mostrar.");
-        }
-
-    } catch (error) {
-        console.error("Error al obtener puntajes:", error);
-    }
-}
-
-window.onload = () => {
-    mostrarRanking();
-};
-*/
-
-

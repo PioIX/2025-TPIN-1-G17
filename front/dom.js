@@ -15,7 +15,16 @@ class UserInterface {
     getNombre() {
         return document.getElementById("nombre").value;
     }
-
+    getAdmin() {
+        return document.getElementById("es_admin").value;
+    }
+    
+    getNombreRegistro() {
+        return document.getElementById("nombreRegistro").value;
+    }
+    getContraseñaRegistro() {
+        return document.getElementById("passwordRegistro").value;
+    }
 
     /**
      * Obtiene el texto ingresado en el input "Usuario", sección "Login".
@@ -68,130 +77,7 @@ class UserInterface {
         }
     }
 
-    /**
-     * Obtiene el texto ingresado en el input "Título de la nota", sección "Ingreso de nueva nota".
-     * @returns String que contiene el título de la nota.
-     */
-    getNoteTitle() {
-        return document.getElementById("title").value;
-    }
-
-    /**
-     * Obtiene el texto ingresado en el input "Contenido", sección "Ingreso de nueva nota".
-     * @returns String que contiene el contenido de la nota.
-     */
-    getNoteContent() {
-        return document.getElementById("content").value;
-    }
-
-    /**
-     * Obtiene el texto ingresado en el input "Categoría", sección "Ingreso de nueva nota".
-     * @returns String que contiene la categoría de la nota.
-     */
-    getNoteCategory() {
-        return document.getElementById("category").value;
-    }
-
-    /**
-     * Obtiene el ID de la nota seleccionada en el select, sección "Búsquedas".
-     * @returns Número entero con el ID de la nota que se solicita.
-     */
-    getSelectedNote() {
-        return parseInt(document.getElementById("selectNote").value);
-    }
-
-
-    /**
-     * Agrega una opción al select de notas, sección "Búsquedas".
-     * @param {Number} id ID de la nueva nota.
-     * @param {String} title Título de la nueva nota.
-     */
-    addNoteToSelect(id, title) {
-        document.getElementById("selectNote").innerHTML += `
-            <option value="${id}" id="optionNote${id}">ID ${id} - ${title}</option>
-        `;
-    }
-
-    /**
-     * Vacía el select de notas, sección "Búsquedas".
-     */
-    clearSelect() {
-        document.getElementById("selectNote").innerHTML = "";
-    }
-
-    /**
-     * Obtiene el texto ingresado en el input "Buscar por contenido", sección "Búsquedas y modificaciones".
-     * @returns String que contiene el pedazo de texto que se busca esté contenido en la nota.
-     */
-    getSearchContent() {
-        return document.getElementById("searchByContent").value;
-    }
-
-    /**
-     * Dibuja una nueva nota en la parte inferior de la pantalla con DOM a partir de los datos ingresados.
-     * @param {Number} id ID de la nueva nota.
-     * @param {String} title Título de la nueva nota.
-     * @param {String} content Contenido de la nueva nota.
-     * @param {String} category Categoría de la nueva nota.
-     */
-    createNote(id, title, content, category) {
-        document.getElementById("allNotes").innerHTML += `
-            <div id="note${id}" class="card shadow-sm m-3">
-                <div class="card-header">
-                    <h5 class="card-title" id="noteTitle${id}">${title}</h5>
-                    <h6 class="card-subtitle mb-0 text-muted">ID: ${id}</h6>
-                </div>
-                <div class="card-body">
-                    <p class="card-text" id="noteContent${id}">${content}</p>
-                    <div class="row">
-                        <div class="col d-flex align-items-center">
-                            <h5 class="mb-0"><span class="badge bg-secondary" id="noteCategory${id}">${category}</span></h5>
-                        </div>
-                        <div class="col d-flex justify-content-end">
-                            <button onclick="editNote(${id})" class="btn btn-outline-primary btn-sm me-2"
-                                type="button" data-bs-toggle="tooltip" data-bs-placement="top"
-                                title="Editar Nota">Editar Nota
-                            </button>
-                            <button onclick="eraseNote(${id})" class="btn btn-outline-danger btn-sm" type="button"
-                                data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Nota">Eliminar Nota
-                            </button>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-            `;
-    }
-
-    /**
-     * Elimina mediante DOM la nota que corresponda al ID ingresado.
-     * @param {Number} id ID de la nota a eliminar.
-     */
-    removeNote(id) {
-        document.getElementById(`note${id}`).remove();
-        document.getElementById(`optionNote${id}`).remove();
-    }
-
-    /**
-     * Elimina todas las notas que se están mostrando en pantalla.
-     */
-    clearAllNotes() {
-        document.getElementById("allNotes").innerHTML = "";
-    }
-
-    /**
-     * Modifica los datos de una nota ya dibujada mediante DOM a partir de los datos ingresados.
-     * @param {Number} id ID de la nota a modificar.
-     * @param {String} title Nuevo título de la nota.
-     * @param {String} content Nuevo contenido de la nota.
-     * @param {String} category Nueva categoría de la nota.
-     */
-    editNote(id, title, content, category) {
-        document.getElementById(`noteTitle${id}`).textContent = title;
-        document.getElementById(`noteContent${id}`).textContent = content;
-        document.getElementById(`noteCategory${id}`).textContent = category;
-        document.getElementById(`optionNote${id}`).innerHTML = `ID ${id} - ${title}`;
-    }
+    
 
     /**
      * Muestra el modal y le inserta los textos que se reciben como parámetros.

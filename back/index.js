@@ -82,6 +82,7 @@ app.post('/agregarUsuario', async function (req, res) {
                 ('${req.body.nombre}', 0,'${req.body.password}');
             `)
         res.send({ res: "ok" })
+        
     } else {
         res.send({ res: "Ya existe ese dato" })
 
@@ -190,18 +191,7 @@ app.put('/modificarFrase', async function(req, res) {
 
 
 //JUEGO
-/* app.get('/frase', async (req, res) => {
-    try {
-        const frases = await realizarQuery("SELECT * FROM Frases ORDER BY RAND() LIMIT 1;");
-        if (frases.length > 0) {
-            res.send({ ok: true, frase: frases[0] });
-        } else {
-            res.send({ ok: false, mensaje: "No hay frases" });
-        }
-    } catch (error) {
-        res.status.send({ ok: false, mensaje: "Error en el servidor", error: error.message });
-    }
-}); */
+
 app.get('/frase', async (req, res) => {
     try {
         const frases = await realizarQuery("SELECT * FROM Frases ORDER BY RAND() LIMIT 1;");

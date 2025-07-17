@@ -28,7 +28,7 @@ async function agregarUsuario(datos) {
         console.log(result)
 
         if(result.agregado == true){
-            ui.showModal("Usuario agregado correctamente");
+            alert("Usuario agregado correctamente");
         }
     } catch (error) {
         console.log("Error", error);

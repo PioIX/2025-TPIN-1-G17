@@ -11,14 +11,13 @@
     <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
 </head>
 
-<body>
-
-
+<body class="final-juego">
     <header>
         <br>
         <div class="menu1">
             <nav>
-                <a href="index2.html" class="boton">Inicio</a>
+                <a href="iniciarSesion.html" class="boton">Iniciar Sesión</a>
+                <a href="index.html" class="boton">Inicio</a>
                 <a href="quienlodijo.html" class="boton">¿Quién lo dijo?</a>
                 <a href="fin.html" class="boton">Puntuaciones</a>
                 <a href="indexAdmin.html" class="boton">Admin</a>
@@ -27,7 +26,6 @@
         </div>
         <br>
     </header>
-
     <div class="contenedor">
         <h2>Agregar nuevo usuario</h2>
 
@@ -96,26 +94,26 @@
     <div class="contenedor">
 
         <h2>Modificar Frase</h2>
-
-        <div class="grid-container">
-            <input type="number" id="fraseId" placeholder="ID de la frase">
+        <div class="contenedor-login">
+            <div class="grid-container">
+                <input type="number" id="fraseId" placeholder="ID de la frase">
+            </div>
+            <div class="grid-container">
+                <input type="text" id="nuevoContenido" placeholder="Nuevo contenido">
+            </div>
+            <div class="grid-container">
+                <input type="text" id="nuevaProcedencia" placeholder="Nueva procedencia">
+            </div>
+            <div class="grid-container">
+                <input type="number" id="nuevoAutor" placeholder="ID del autor correcto">
+            </div>
+            <div class="grid-container">
+                <input type="number" id="nuevoIncorrecto" placeholder="ID del autor incorrecto">
+            </div>
+            <div class="grid-container">
+                <button onclick="modificarFrase()" class="button2">Guardar cambios</button>
+            </div>
         </div>
-        <div class="grid-container">
-            <input type="text" id="nuevoContenido" placeholder="Nuevo contenido">
-        </div>
-        <div class="grid-container">
-            <input type="text" id="nuevaProcedencia" placeholder="Nueva procedencia">
-        </div>
-        <div class="grid-container">
-            <input type="number" id="nuevoAutor" placeholder="ID del autor correcto">
-        </div>
-        <div class="grid-container">
-            <input type="number" id="nuevoIncorrecto" placeholder="ID del autor incorrecto">
-        </div>
-        <div class="grid-container">
-            <button onclick="modificarFrase()" class="button2">Guardar cambios</button>
-        </div>
-
     </div>
 
     <div class="contenedor">
